@@ -80,14 +80,14 @@ indicateurs `[SYN]`, `[SYN, ACK]`, `[ACK]`. Comment s'appelle cet échange, et �
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _C’est la poignée de main en 3 temps (three-way handshake) de TCP. Elle sert à établir la connexion entre le client et le serveur avant d’échanger des données : chacun confirme qu’il est prêt et qu’il reçoit bien l’autre_
 
 **Question A.2.** Repérez le numéro du paquet contenant la **requête** `GET /` et celui contenant
 la **réponse** `200 OK`. Qui envoie chacun d'eux (IP source) ?
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _La requête GET / est le paquet 4, envoyée par le client (172.20.1.50). La réponse 200 OK est le paquet 8, envoyée par le serveur web (172.20.0.10)_
 
 ---
 
@@ -106,31 +106,31 @@ la **réponse** `200 OK`. Qui envoie chacun d'eux (IP source) ?
 
 **Question B.1.** Complétez le tableau avec les valeurs de **votre** capture :
 
-| Couche OSI         | Protocole | Champ observé       | Valeur dans ma capture |
-| ------------------ | --------- | ------------------- | ---------------------- |
-| 7 — Application    | HTTP      | Méthode et chemin   | …                      |
-| 4 — Transport      | TCP       | Port source         | …                      |
-| 4 — Transport      | TCP       | Port destination    | …                      |
-| 3 — Réseau         | IPv4      | IP source           | …                      |
-| 3 — Réseau         | IPv4      | IP destination      | …                      |
-| 3 — Réseau         | IPv4      | TTL                 | …                      |
-| 2 — Liaison        | Ethernet  | MAC source          | …                      |
-| 2 — Liaison        | Ethernet  | MAC destination     | …                      |
-| 1 — Physique       | —         | (non visible)       | —                      |
+| Couche OSI       | Protocole | Champ observé     | Valeur dans ma capture |
+| ---------------- | --------- | ----------------- | ---------------------- |
+| 7 – Application  | HTTP      | Méthode et chemin | GET /                  |
+| 4 – Transport    | TCP       | Port source       | 48420                  |
+| 4 – Transport    | TCP       | Port destination  | 80                     |
+| 3 – Réseau       | IPv4      | IP source         | 172.20.1.50            |
+| 3 – Réseau       | IPv4      | IP destination    | 172.20.0.10            |
+| 3 – Réseau       | IPv4      | TTL               | 64                     |
+| 2 – Liaison      | Ethernet  | MAC source        | ca:e1:23:1c:ed:0a      |
+| 2 – Liaison      | Ethernet  | MAC destination   | 96:ef:f5:4c:4b:15      |
+| 1 – Physique     | –         | (non visible)     | –                      |
 
 **Question B.2.** Le port destination est `80`. Que désigne-t-il ? Le port source est un grand
 nombre (ex. `52790`) : qui l'a choisi, et pourquoi n'est-il pas toujours le même ?
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Le port 80 désigne le service HTTP du serveur web. Le port source (48420) est un port éphémère choisi au hasard par le client. Il change à chaque connexion pour que le client puisse distinguer plusieurs connexions simultanées_
 
 **Question B.3.** La **MAC destination** est-elle celle du site web `internet` ? À quelle machine
 appartient-elle ? (Comparez avec `ip neigh` dans le terminal client, et repensez à l'exercice 1.)
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Non. La MAC destination (96:ef:f5:4c:4b:15) est celle du routeur (172.20.1.254), comme le montre ip neigh. Le site web est sur un autre réseau, donc la trame est envoyée à la passerelle_
 
 ### Étape 6 — Comparer avec un paquet sans HTTP
 
@@ -145,7 +145,10 @@ dans le paquet 1 ? Pourquoi ?
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Paquet 1 : eth > ip > tcp
+Paquet 4 : eth > ip > tcp > http
+
+Il manque la couche HTTP (L7) dans le paquet 1. C’est un SYN du handshake TCP : la connexion n’est pas encore établie, donc aucune donnée applicative n’est envoyée_
 
 ### Étape 7 — Regarder la réponse du serveur
 
