@@ -104,7 +104,7 @@ eu besoin de cette information **avant** de pouvoir envoyer le ping ?
 
 > 💬 **Votre réponse :**
 >
-> _172.20.1.2 dev eth0 lladdr e6:c0:b5:ba:67:81 REACHABLE, l'adresse ip du server DHCP (172.20.1.2) et son adresse mac (e6:c0:b5:ba:67:81)_
+> _172.20.1.2 dev eth0 lladdr e6:c0:b5:ba:67:81 REACHABLE, l'adresse ip du server DHCP (172.20.1.2) et son adresse mac (e6:c0:b5:ba:67:81. Le client en a eu besoin avant le ping parce que, sur un réseau local, les trames Ethernet sont envoyées vers une adresse MAC. Il connaissait seulement l’IP de la cible. Il a donc d’abord diffusé une requête ARP en broadcast (« Qui a 172.20.1.2 ? »), le serveur a répondu avec sa MAC, et le client a pu ensuite envoyer ses paquets ICMP_
 
 ### Étape 5 — Joindre une machine d'un autre réseau
 
@@ -121,7 +121,7 @@ a-t-il appris la MAC ? Expliquez pourquoi, en vous aidant de la fiche théorique
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Le client a appris la MAC de 172.20.1.254 (96:ef:f5:4c:4b:15), le routeur. Comme 172.20.0.10 n’est pas dans son réseau (172.20.1.0/24), le client envoie le paquet à sa passerelle. ARP ne fonctionne qu’en local, car un broadcast ne traverse pas un routeur. La trame porte donc la MAC du routeur, mais l’IP de destination reste 172.20.0.10_
 
 ---
 
@@ -141,7 +141,7 @@ cette différence ? (Indice : chaque routeur traversé diminue le TTL de 1.)
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Les ttl sont idnetique a 63_
 
 ### Étape 7 — traceroute
 
@@ -158,7 +158,9 @@ Dessinez (en texte) le chemin suivi : `client → … → internet`.
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Il y a 2 sauts. Le premier est 172.20.1.254, le routeur.
+
+client (172.20.1.50) → routeur (172.20.1.254) → internet (172.20.0.10)_
 
 ### Étape 8 — Le lab est isolé
 
@@ -172,7 +174,7 @@ ping -c 2 -W 2 8.8.8.8
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Le ping échoue : le routeur (172.20.1.254) répond Destination Net Unreachable. Il ne connaît que les réseaux du lab et n’a aucune route vers le vrai Internet, donc le lab est isolé_
 
 ---
 
@@ -182,18 +184,18 @@ ping -c 2 -W 2 8.8.8.8
 
 | Notion        | Explication en une phrase |
 | ------------- | ------------------------- |
-| Adresse IP    | …                         |
-| Adresse MAC   | …                         |
-| Passerelle    | …                         |
-| ARP           | …                         |
-| TTL           | …                         |
+| Adresse IP  | Adresse logique qui identifie une machine sur un réseau.           |
+| Adresse MAC | Adresse physique de la carte réseau, utilisée sur le réseau local. |
+| Passerelle  | Routeur qui permet de sortir du réseau local.                      |
+| ARP         | Protocole qui trouve la MAC correspondant à une IP locale.         |
+| TTL         | Compteur qui baisse de 1 à chaque routeur, le paquet meurt à 0.    |
 
 **Question D.2.** Vrai ou faux ? Justifiez : « Pour envoyer un paquet à `172.20.0.10`, le client met
 dans la trame la MAC de `172.20.0.10`. »
 
 > 💬 **Votre réponse :**
 >
-> _Remplacez ce texte par votre réponse._
+> _Faux. 172.20.0.10 est sur un autre réseau, donc le client met dans la trame la MAC du routeur (172.20.1.254). Seule l’IP de destination reste 172.20.0.10_
 
 ---
 
