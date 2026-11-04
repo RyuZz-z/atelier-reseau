@@ -81,8 +81,9 @@ Rendez-vous sur **https://www.pythonanywhere.com/**, créez un compte gratuit (*
 l'onglet **Web** créez une application Web **Flask** avec la dernière version de Python proposée.
 
 Notez l'adresse de votre site :
-* compte créé sur **www.pythonanywhere.com** (US) → `https://<votre-site>.pythonanywhere.com` ;
-* compte créé sur **eu.pythonanywhere.com** (Europe) → `https://<votre-site>.eu.pythonanywhere.com`.
+compte créé sur www.pythonanywhere.com (US) → https://<votre-site>.pythonanywhere.com ;
+compte créé sur eu.pythonanywhere.com (Europe) → https://ryuzz.eu.pythonanywhere.com.
+https://ryuzz.pythonanywhere.com/
 
 Dans les énoncés, remplacez `<votre-site>` par votre nom d'utilisateur PythonAnywhere (et ajoutez
 `.eu` dans l'adresse si votre compte est européen).
